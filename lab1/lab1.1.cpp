@@ -8,6 +8,7 @@ class tab
 {
 	int length;
 	double * tablica;
+public:
 	void enlarge(int);
 public:
 	//konstruktory, metody 
@@ -121,12 +122,11 @@ void measures(int x, int y){ //x rozmiar badanej tablicy, y ilosc powtorzen mier
 	for(int i=0; i<20; i++){
 		pomiar=oryginal;
 		t.begin();
-		pomiar.enlarge(2*pomiar.length);
+		pomiar.enlarge(2*(pomiar.length));
 		t.stop();
 		wyniki_x2[i]=t.duration();
-		cout<< t.duration();
+		// cout<< t.duration();
 	}
-	pomiar.output();
 
 	cout<< "wyniki dla " << y << " elementow." << endl;
 	cout<< "+1" << endl; 
@@ -138,12 +138,11 @@ void measures(int x, int y){ //x rozmiar badanej tablicy, y ilosc powtorzen mier
 }
 // 
 int main(){
-	int x;
+	double x;
+	cin >> x;
 	int y;
-	cout<<"ilosc elementow: ";
-	cin>> x;
-	cout<<"ilosc powtorzen: ";
-	cin>> y;
+	cin >> y;
 	measures(x, y);
+
 	return 0;
 }
