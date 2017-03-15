@@ -3,6 +3,7 @@ using namespace std;
 #include <cstdlib>
 #include <chrono>
 #include <ctime>
+#include <time.h>
 
 class tab
 {
@@ -81,30 +82,32 @@ double tab::mean(){
 	}
 	return x/length;
 }
-
+// 
 struct clock_
 {
-	chrono::time_point<chrono::system_clock> start, end;
-	chrono::duration<double> elapsed_seconds = end-start;
-	// 
+	double start, end;
+	double duration_; 
     void begin(){
-    	start = chrono::system_clock::now();
+    	start = clock();
     }
     // 
     void stop(){
-    	end = chrono::system_clock::now();
+    	end = clock();
     }
     // 
-	void duration_out(){ 
-    	cout<< "czas trwania: " << elapsed_seconds.count();
+	void duration_out(){
+		duration_ = end-start; 
+    	cout<< "czas trwania: " << duration_ << endl;
 	}
 	double duration(){
-		return elapsed_seconds.count();
+		duration_ = end-start;
+		return duration_;
 	}
 	//
 	friend void measures(int);
 };
-// 
+//
+
 void measures(int x, int y){ //x rozmiar badanej tablicy, y ilosc powtorzen mierzenia czasu
 	clock_ t;
 	tab oryginal(x);
@@ -146,3 +149,11 @@ int main(){
 
 	return 0;
 }
+
+// std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+// std::chrono::steady_clock::time_point end= std::chrono::steady_clock::now();
+
+// std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() <<std::endl;
+// std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count() <<std::endl;
+
+ 
