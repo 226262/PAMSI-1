@@ -8,24 +8,28 @@ class tab              //
 	int length;        //dlugosc tblicy
 	double * tablica;  //dynamiczna tablica
 	void enlarge(int); //funkcja powiekszania, przyjmowany argument mowi do ilu ziwekszyc tablice
+	int amor;          //wolne miejsce w tablicy
 public:
 	//konstruktory, metody 
 	tab(int);
-	~tab();
 	void input();      //metoda sluzaca do wpisywania z klawiatury elementow tablicy
+	~tab(); 
 	void fill_rand(int);//wypelnia tablice randomowymi liczbami, argument mowi jaki jest zakres randomowych liczb
 	void output();      //wypisuje wartosci tablicy
 	int size();         //zwraca rozmiar tablicy
 	void size_out();	//wypisuje rozmiar tablicy
+	int get_amor();    //zwraca dlugosc amora
 	friend void measures(int, int); //zaprzyjazniona funkcja sluzaca do pomiarow
-	double mean(); //funkcja zwracajaca srednia wszystkich elementow tablicy
+	double mean(); //funkcja zwracajaca srednia wszystkich elementow tablicy 
 	//przeciazenia
-	double & operator[](int element) {return tablica[element];} //przeciazenie operatora [] 
+	double & operator[](int element) {return tablica[element];} //przeciazenie operatora []
 };
 // 
 tab::tab(int x){
 	length=x;
+	amor =x;
 	tablica = new  double [length];
+
 }
 //
 tab::~tab(){
@@ -39,12 +43,14 @@ void tab::input(){
 		cin >> tmp;
 		tablica[i]=tmp;
 	}
+	amor=0;
 }
 //
 void tab::fill_rand(int range){
 	for (int i=0; i<length; i++){
 		tablica[i]=rand() % range;
 	}
+	amor=0;
 }
 // 
 void tab::output(){
@@ -61,13 +67,19 @@ void tab::size_out(){
 int tab::size(){
 	return length;
 }
+//
+int tab::get_amor(){
+	return amor;
+}
 // 
 void tab::enlarge(int new_length){
 	double * tmp = new double [new_length];
 	for (int i=0; i<length; i++){
 		tmp[i]=tablica[i];
 	}
+	// delete [] tablica;
 	tablica=tmp;
+	amor=new_length-(length-amor);
 	length=new_length;
 }
 // 
@@ -107,22 +119,38 @@ class clock_
 
 void measures(int x, int y){ //funckja wykonujaca pomiary czasu, x rozmiar badanej tablicy, y ilosc powtorzen mierzenia czasu
 	clock_ t;
-	tab oryginal(x); //inicjalizacja tablicy oryginalnej 
-	tab pomiar(x);   //inicjalizacja tablicy na ktorej wykonane zzostana pomiary
-	oryginal.fill_rand(100); //wypelnienie tablicy oryginalnej randomowymi wartosciami od 0 do 100
-	tab wyniki_add1(y); //inicjalizacja tablicy do ktorej zapisane zostana pomiary dla powiekszania o 1
-	tab wyniki_x2(y);   //inicjalizacja tablicy do ktorej zapisane zostana pomiary dla powiekszania razy dwa
+	tab pomiar_add1(1); //inicjalizacja tablicy na ktorej wykonane zostana pomiary dla zwiekszania o 1
+	tab pomiar_x2(1);	//inicjalizacja tablicy na ktorej wykonane zostana pomiary dla zwiekszania dwukrotnie
+	tab wyniki_add1(y); //inicjalizacja tablicy do ktorej zapisane zostana pomiar dla powiekszania o 1
+	tab wyniki_x2(y);   //inicjalizacja tablicy do ktorej zapisane zostana pomiar dla powiekszania razy dwa
 	for(int i=0; i<y; i++){
-		pomiar=oryginal; //tablica pomiarowa jest taka sama jak oryginal
 		t.begin();       //rozpoczecie mierzenia czasu
-		pomiar.enlarge((pomiar.length)+1); //powiekszenie tablicy o 1 
+		for(int j=0; j<x; j++){
+			
+			if(!pomiar_add1.amor){ 							 //jesli nie ma miejsca tablica zostanie powiekszona o 1
+				pomiar_add1.enlarge((pomiar_add1.length)+1); //powiekszenie tablicy o 1 
+				j--; 					 //zmniejszenie licznika petli w celu nie wyjscia poza zaalokowana pamiec dla tablicy
+			}
+			else{
+				pomiar_add1[j]=rand (); // w przypadku wolnego miejsca, dopisana zostaje randomowa wartosc
+				pomiar_add1.amor--;     // ilosc miejsc wolnych zmniejszaz sie o 1
+			}
+		}
 		t.stop();        //koniec pomiaru czasu
 		wyniki_add1[i]=t.duration(); //wpisanie wyniku do tablicy
 	}
-	for(int i=0; i<20; i++){
-		pomiar=oryginal;
+	for(int i=0; i<y; i++){
 		t.begin();
-		pomiar.enlarge(2*(pomiar.length)); //powiekszenie tablicy dwukrotnie
+		for(int j=0; j<x; j++){
+			if(!pomiar_x2.amor){
+				pomiar_x2.enlarge(2*(pomiar_x2.length)); //powiekszenie tablicy dwukrotnie 
+				j--;
+			}
+			else{
+				pomiar_x2[j]=rand ();
+				pomiar_x2.amor--;
+			}
+		}
 		t.stop();
 		wyniki_x2[i]=t.duration();
 	}
@@ -139,16 +167,15 @@ void measures(int x, int y){ //funckja wykonujaca pomiary czasu, x rozmiar badan
 }
 // 
 int main(){
-	double x;
-	int y;
-	cout << "ilosc elementow tablicy: ";
-	cin >> x;
-	cout << "ilosc powtorzen obliczen: ";
-	cin >> y;
-	cout << "*************" << endl;
-	measures(x, y);
+	double x=10;
+	int y=20;
+	for (int i=0; i<1; i++){
+		cout << "*************" << endl;
+		measures(x, y);
+		cout << "-*************" << endl;
+		x=x*10;
+	}	
 	return 0;
 }
 
 
- 
