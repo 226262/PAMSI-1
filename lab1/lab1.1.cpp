@@ -4,6 +4,7 @@ using namespace std;
 #include <chrono>
 #include <ctime>
 #include <ratio>
+#include <iomanip>
 using namespace std::chrono;
 
 
@@ -12,7 +13,7 @@ class tab              //
 {
 	int length;        //dlugosc tblicy
 	double * tablica;  //dynamiczna tablica
-	void enlarge(int); //funkcja powiekszania, przyjmowany argument mowi do ilu ziwekszyc tablice
+	void enlarge(unsigned int); //funkcja powiekszania, przyjmowany argument mowi do ilu ziwekszyc tablice
 	int amor;          //wolne miejsce w tablicy
 public:
 	//konstruktory, metody 
@@ -24,7 +25,7 @@ public:
 	int size();         //zwraca rozmiar tablicy
 	void size_out();	//wypisuje rozmiar tablicy
 	int get_amor();    //zwraca dlugosc amora
-	friend void measures(int, int); //zaprzyjazniona funkcja sluzaca do pomiarow
+	friend void measures(int, int, int); //zaprzyjazniona funkcja sluzaca do pomiarow
 	double mean(); //funkcja zwracajaca srednia wszystkich elementow tablicy 
 	//przeciazenia
 	double & operator[](int element) {return tablica[element];} //przeciazenie operatora []
@@ -60,7 +61,7 @@ void tab::fill_rand(int range){
 // 
 void tab::output(){
 	for(int i=0; i<length; i++){
-		cout << tablica[i]<<" ";
+		cout << fixed << setprecision(2) << tablica[i]<<" "<<endl;
 	}
 	cout << endl << "thats all" << endl;
 }
@@ -77,7 +78,7 @@ int tab::get_amor(){
 	return amor;
 }
 // 
-void tab::enlarge(int new_length){
+void tab::enlarge(unsigned int new_length){
 	double * tmp = new double [new_length];
 	for (int i=0; i<length; i++){
 		tmp[i]=tablica[i];
@@ -101,7 +102,7 @@ class clock_
 {
 	high_resolution_clock::time_point start, end;
 	// std::chrono::duration<double> time_span; 
-	std::chrono::microseconds ms;
+	std::chrono::nanoseconds ms;
 	 
     void begin(){
     	start = high_resolution_clock::now();
@@ -112,23 +113,24 @@ class clock_
     }
     // 
 	void duration_out(){
-		ms = duration_cast<microseconds>(end-start); 
+		ms = duration_cast<nanoseconds>(end-start); 
     	cout<<std::fixed<< "czas trwania: " << ms.count() << endl;
 	}
-	double duration(){
-		ms = duration_cast<microseconds>(end-start);
+	float duration(){
+		ms = duration_cast<nanoseconds>(end-start);
 		return double(ms.count());
 	}
 	//
-	friend void measures(int, int);
+	friend void measures(int, int, int);
 };
 //
 
-void measures(int x, int y){ //funckja wykonujaca pomiary czasu, x rozmiar badanej tablicy, y ilosc powtorzen mierzenia czasu
+void measures(int x, int y, int z){ //funckja wykonujaca pomiary czasu, x rozmiar badanej tablicy, y ilosc powtorzen mierzenia czasu
 	clock_ t1, t2;
 	tab wyniki_add1(y); //inicjalizacja tablicy do ktorej zapisane zostana pomiar dla powiekszania o 1
 	tab wyniki_x2(y);   //inicjalizacja tablicy do ktorej zapisane zostana pomiar dla powiekszania razy dwa
-	for(int i=0; i<y; i++){
+	if(z){
+		for(int i=0; i<y; i++){
 		tab pomiar_add1(1); //inicjalizacja tablicy na ktorej wykonane zostana pomiary dla zwiekszania o 1
 		t1.begin();       //rozpoczecie mierzenia czasu
 		for(int j=0; j<x; j++){
@@ -138,15 +140,17 @@ void measures(int x, int y){ //funckja wykonujaca pomiary czasu, x rozmiar badan
 				j--; 					 //zmniejszenie licznika petli w celu nie wyjscia poza zaalokowana pamiec dla tablicy
 			}
 			else{
-				pomiar_add1[j]=rand (); // w przypadku wolnego miejsca, dopisana zostaje randomowa wartosc
+				pomiar_add1[j]=2; // w przypadku wolnego miejsca, dopisana zostaje randomowa wartosc
 				pomiar_add1.amor--;     // ilosc miejsc wolnych zmniejszaz sie o 1
 			}
 		}
 		t1.stop();        //koniec pomiaru czasu
 		wyniki_add1[i]=t1.duration(); //wpisanie wyniku do tablicy
-		// delete [] pomiar_add1.tablica;
+		}
+
 	}
-	for(int i=0; i<y; i++){
+	else{
+		for(int i=0; i<y; i++){
 		tab pomiar_x2(1);	//inicjalizacja tablicy na ktorej wykonane zostana pomiary dla zwiekszania dwukrotnie
 		t2.begin();
 		for(int j=0; j<x; j++){
@@ -164,25 +168,27 @@ void measures(int x, int y){ //funckja wykonujaca pomiary czasu, x rozmiar badan
 		t2.stop();
 		wyniki_x2[i]=t2.duration();
 		// delete [] pomiar_x2.tablica;
+		}
 	}
-
 	cout<< "wyniki dla " << x << " elementow." << endl;
 	cout<< "+1" << endl; 
 	wyniki_add1.output();
-	cout<< "srednia: " << wyniki_add1.mean();
+	cout<< "srednia: " << fixed << setprecision(3) << wyniki_add1.mean();
 	cout << endl;
 	cout<< "x2" << endl; 
 	wyniki_x2.output();
-	cout<< "srednia: " << wyniki_x2.mean();
+	cout<< "srednia: " <<fixed<<setprecision(3)<< wyniki_x2.mean();
 	cout << endl;
 }
 // 
 int main(){
 	double x=10;
 	int y=20;
-	for (int i=0; i<6; i++){
+	int z;
+	cin >> z; //zmienna sluzaca do wyboru czy program ma wykonywac obliczania dla z=0 metoda dwukrotnego powiekszania z=/= metoda zwiekszania o 1
+	for (int i=0; i<4; i++){
 		cout << "*************" << endl;
-		measures(x, y);
+		measures(x, y, z);
 		cout << "-*************" << endl;
 		x=x*10;
 	}	
