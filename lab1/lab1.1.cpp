@@ -1,7 +1,12 @@
 #include <iostream>
 using namespace std;
 #include <cstdlib>
-#include <time.h>
+#include <chrono>
+#include <ctime>
+#include <ratio>
+using namespace std::chrono;
+
+
 
 class tab              //
 {
@@ -77,7 +82,7 @@ void tab::enlarge(int new_length){
 	for (int i=0; i<length; i++){
 		tmp[i]=tablica[i];
 	}
-	// delete [] tablica;
+	delete [] tablica;
 	tablica=tmp;
 	amor=new_length-(length-amor);
 	length=new_length;
@@ -94,23 +99,25 @@ double tab::mean(){
 // 
 class clock_
 {
-	double start, end;
-	double duration_; 
+	high_resolution_clock::time_point start, end;
+	// std::chrono::duration<double> time_span; 
+	std::chrono::microseconds ms;
+	 
     void begin(){
-    	start = clock();
+    	start = high_resolution_clock::now();
     }
     // 
     void stop(){
-    	end = clock();
+    	end = high_resolution_clock::now();
     }
     // 
 	void duration_out(){
-		duration_ = end-start; 
-    	cout<< "czas trwania: " << duration_ << endl;
+		ms = duration_cast<microseconds>(end-start); 
+    	cout<<std::fixed<< "czas trwania: " << ms.count() << endl;
 	}
 	double duration(){
-		duration_ = end-start;
-		return duration_;
+		ms = duration_cast<microseconds>(end-start);
+		return double(ms.count());
 	}
 	//
 	friend void measures(int, int);
@@ -118,13 +125,12 @@ class clock_
 //
 
 void measures(int x, int y){ //funckja wykonujaca pomiary czasu, x rozmiar badanej tablicy, y ilosc powtorzen mierzenia czasu
-	clock_ t;
-	tab pomiar_add1(1); //inicjalizacja tablicy na ktorej wykonane zostana pomiary dla zwiekszania o 1
-	tab pomiar_x2(1);	//inicjalizacja tablicy na ktorej wykonane zostana pomiary dla zwiekszania dwukrotnie
+	clock_ t1, t2;
 	tab wyniki_add1(y); //inicjalizacja tablicy do ktorej zapisane zostana pomiar dla powiekszania o 1
 	tab wyniki_x2(y);   //inicjalizacja tablicy do ktorej zapisane zostana pomiar dla powiekszania razy dwa
 	for(int i=0; i<y; i++){
-		t.begin();       //rozpoczecie mierzenia czasu
+		tab pomiar_add1(1); //inicjalizacja tablicy na ktorej wykonane zostana pomiary dla zwiekszania o 1
+		t1.begin();       //rozpoczecie mierzenia czasu
 		for(int j=0; j<x; j++){
 			
 			if(!pomiar_add1.amor){ 							 //jesli nie ma miejsca tablica zostanie powiekszona o 1
@@ -136,23 +142,28 @@ void measures(int x, int y){ //funckja wykonujaca pomiary czasu, x rozmiar badan
 				pomiar_add1.amor--;     // ilosc miejsc wolnych zmniejszaz sie o 1
 			}
 		}
-		t.stop();        //koniec pomiaru czasu
-		wyniki_add1[i]=t.duration(); //wpisanie wyniku do tablicy
+		t1.stop();        //koniec pomiaru czasu
+		wyniki_add1[i]=t1.duration(); //wpisanie wyniku do tablicy
+		// delete [] pomiar_add1.tablica;
 	}
 	for(int i=0; i<y; i++){
-		t.begin();
+		tab pomiar_x2(1);	//inicjalizacja tablicy na ktorej wykonane zostana pomiary dla zwiekszania dwukrotnie
+		t2.begin();
 		for(int j=0; j<x; j++){
 			if(!pomiar_x2.amor){
 				pomiar_x2.enlarge(2*(pomiar_x2.length)); //powiekszenie tablicy dwukrotnie 
 				j--;
+				// cout << "powiekszyle sie" << endl;
 			}
 			else{
 				pomiar_x2[j]=rand ();
 				pomiar_x2.amor--;
+				// cout << "dodale sie" << endl;
 			}
 		}
-		t.stop();
-		wyniki_x2[i]=t.duration();
+		t2.stop();
+		wyniki_x2[i]=t2.duration();
+		// delete [] pomiar_x2.tablica;
 	}
 
 	cout<< "wyniki dla " << x << " elementow." << endl;
@@ -169,7 +180,7 @@ void measures(int x, int y){ //funckja wykonujaca pomiary czasu, x rozmiar badan
 int main(){
 	double x=10;
 	int y=20;
-	for (int i=0; i<1; i++){
+	for (int i=0; i<6; i++){
 		cout << "*************" << endl;
 		measures(x, y);
 		cout << "-*************" << endl;
