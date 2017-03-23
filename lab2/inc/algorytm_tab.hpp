@@ -6,7 +6,7 @@
 using namespace std;
 
 void algorytm_tab_add1(int x){
-		tab<int> pomiar_add1(1);
+		tab<double> pomiar_add1(1);
 		for(int j=0; j<x; j++){
 			
 			if(!pomiar_add1.amor){ 							 //jesli nie ma miejsca tablica zostanie powiekszona o 1
@@ -21,7 +21,7 @@ void algorytm_tab_add1(int x){
 }
 
 void algorytm_tab_x2(int x){
-		tab<int> pomiar_x2(1);	//inicjalizacja tablicy na ktorej wykonane zostana pomiary dla zwiekszania dwukrotnie
+		tab<double> pomiar_x2(1);	//inicjalizacja tablicy na ktorej wykonane zostana pomiary dla zwiekszania dwukrotnie
 		for(int j=0; j<x; j++){
 			if(!pomiar_x2.amor){
 				pomiar_x2.enlarge(2*(pomiar_x2.length)); //powiekszenie tablicy dwukrotnie 
