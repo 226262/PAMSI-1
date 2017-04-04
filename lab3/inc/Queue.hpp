@@ -78,7 +78,7 @@ public:
 			} 
 			pop();
 		}
-		cout <<"nie ma mnie tu\t";
+		cout <<"nie ma mnie tu wiec moj adres to";
 		return nullptr;
 	}
 //
