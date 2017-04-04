@@ -1,23 +1,27 @@
 #ifndef iStack_HPP
 #define iStack_HPP
 #include <iostream>
-using namespace std;
-//stos na inty
+#include "Node.hpp"
+#include "iRunable.hpp"
 
-class iStack 
+class iStack : public iRunable 
 {
 public:
 	iStack(){}
 	virtual ~iStack(){}
 // 
 	virtual void add(int a)=0;
-	virtual int get()const=0;
-	virtual int Size()const=0;
-	// virtual Stack find(Stack a)const=0;
+	virtual int get()=0;
+	virtual int get(Node *a)=0;
+	virtual int get_size()=0;
+	virtual Node* find_value(int a)=0;
+	virtual void remove(Node *a)=0;
+	virtual void print()=0;
+	virtual bool is_empty()=0;
+	virtual std::string type()=0;
 // 
-	virtual int top()const=0;	
-	virtual void push(int a)=0;
-// 
-	virtual int pop()=0;	
+	virtual int top()=0;	
+	virtual void push(int a)=0; 
+	virtual void pop()=0;	
 };
 #endif

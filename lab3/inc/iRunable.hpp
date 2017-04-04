@@ -1,12 +1,14 @@
-#ifndef iQueue_HPP
-#define iQueue_HPP
+#ifndef iRunable_HPP
+#define iRunable_HPP
 #include <iostream>
 #include "Node.hpp"
-#include "iRunable.hpp"
-class iQueue : public iRunable
+
+
+class iRunable
 {
-	iQueue(){}
-	virtual ~iQueue(){}
+public:
+	iRunable(){}
+	virtual ~iRunable(){}
 //
 	virtual void add(int a)=0;
 	virtual int get()=0;
@@ -18,8 +20,5 @@ class iQueue : public iRunable
 	virtual bool is_empty()=0;
 	virtual std::string type()=0;
 //	
-	virtual int end()=0;	
-	virtual void push(int a)=0;
-	virtual int pop()=0;	
 };
 #endif
