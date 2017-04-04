@@ -60,10 +60,12 @@ public:
 		tmp=head;
 		while(tmp!=NULL){ //jesli tymczasowy wskaznik bedzie wskazywal na zero oznacza to ze przeszlismy przez cala liste
 			if(tmp->value==a){
+				// cout<< "jestem tutaj(adres) ";
 				return tmp;
 			}
 			tmp=tmp->next;
 		}
+		cout <<"nie ma mnie tu wiec moj adres to ";
 		return NULL;
 	}
 //
@@ -71,11 +73,10 @@ public:
 	void print(){  //wypisuje po kolei elemety listy
 		Node* tmp;
 		tmp=head;
-		while(tmp->next!=NULL){
-			cout<< tmp->value << "\t";
+		for(int i=0; i<size; i++){
+			cout<< tmp->value << "\n";
 			tmp=tmp->next;
 		}
-		cout<< tmp->value << "\n";
 	}
 //
 	int get_size(){   //zwraca rozmiar

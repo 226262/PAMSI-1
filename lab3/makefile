@@ -1,6 +1,6 @@
 CXX=g++
 CXXFLAGS=-std=c++11 -Wall -pedantic
-BIN=lab1
+BIN=program
 COMMAND=10
 
 SRC=$(wildcard src/*.cpp)

@@ -17,10 +17,10 @@ public:
 	int get_value(){   //zwraca wartosc ogniwa
 		return value;
 	}
-// 
-	friend class List; //zaprzyjaznienie klasy lista by miala dostep do private
-	friend class Queue;//--||-- 
-	friend class Stack;//--||--
+// przyjaciele wykorzystujacy ogniwa
+	friend class List; 
+	friend class Queue;
+	friend class Stack;
 };
 
 #endif

@@ -3,15 +3,14 @@
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
-#include "../inc/base.hpp"
 using namespace std;
 
 template <typename T>
-class tab  : public base         //
+class tab       //
 {
-	// int length;        //dlugosc tblicy
+	int length;        //dlugosc tblicy
 	T * tablica;  //dynamiczna tablica
-	// int amor;          //wolne miejsce w tablicy
+	int amor;          //wolne miejsce w tablicy
 public:
 	friend void measures(int, int);
 	T & operator[](int element) {return tablica[element];} //przeciazenie operatora []

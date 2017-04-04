@@ -9,7 +9,7 @@ class iRunable
 public:
 	iRunable(){}
 	virtual ~iRunable(){}
-//
+// virtuale dla listy/stosu/kolejki
 	virtual void add(int a)=0;
 	virtual int get()=0;
 	virtual int get(Node *a)=0;
@@ -19,6 +19,5 @@ public:
 	virtual void print()=0;
 	virtual bool is_empty()=0;
 	virtual std::string type()=0;
-//	
 };
 #endif

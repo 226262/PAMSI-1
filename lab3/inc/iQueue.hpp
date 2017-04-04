@@ -5,6 +5,7 @@
 #include "iRunable.hpp"
 class iQueue : public iRunable
 {
+public:
 	iQueue(){}
 	virtual ~iQueue(){}
 //
@@ -20,6 +21,6 @@ class iQueue : public iRunable
 //	
 	virtual int end()=0;	
 	virtual void push(int a)=0;
-	virtual int pop()=0;	
+	virtual void pop()=0;	
 };
 #endif

@@ -1,25 +1,28 @@
-#ifndef Stack_HPP
-#define Stack_HPP
+#ifndef Queue_HPP
+#define Queue_HPP
 #include <iostream>
-using namespace std;
-#include "iStack.hpp"
 #include "Node.hpp"
+#include "iQueue.hpp"
+using namespace std;
 
-class Stack : public iStack
+class Queue : public iQueue
 {
-	Node* tail; //wskaznik na ostatni element stosu
-	int size;
+	Node *head; //pierwszy element
+	Node *tail; //ostatni element
+	int size;    
 	string what; //czym jestem
 public:
-	Stack(){       //konstruktor
+	Queue(){
+		head=NULL;
 		tail=NULL;
 		size=0;
-		what="Stack";
+		what="Queue";
 	}
 //
 	void add(int a){ //dodanie nowego ogniwa zaraz po tailu, wartosc ogniwa to a 
 		Node * new_ = new Node; //stworzenie nowego ogniwa
-		if (tail==NULL){        //sprawdzenie czy stos jest pusty
+		if (!size){        //sprawdzenie czy kolejka jest pusta
+			head=new_;
 			tail=new_;
 			new_->prev=NULL;     //przypisanie wlasciwych wskznikow do ogniwa
 			new_->next=NULL;
@@ -32,65 +35,69 @@ public:
 		new_->value=a;
 		size++;
 	}
-//
+//	
 	void remove(Node *a){
-		if(a->prev==NULL){
-			tail=NULL;
+		if(a->prev==NULL && a->next!=NULL){  //jesli a jest na poczatku kolejki
+			a->next->prev=NULL;
 		}
 		if(a->prev!=NULL && a->next!=NULL){ //jesli a znajduje sie w srodku stosu
 			a->prev->next=a->next;
 			a->next->prev=a->prev;
 		}
-		if(a->next==NULL && a->prev!=NULL){  //jesli a to tail
+		if(a->next==NULL && a->prev!=NULL){  //jesli na koncu
 			a->prev->next=NULL;
 			tail=a->prev;
+		}
+		if(head==tail){
+			head=NULL;
+			tail=NULL;
 		}
 		size--; //rozmiar sie zmniejsza
 		delete a; //zwolnienie pamieci
 	
 	}
 //
-	void push(int a){ //dodanie nowego elementu na gore stosu
-		add(a);
+	void push(int a){ //dodanie na koniec kolejki
+	 	add(a);
 	}
-//
+// 
+
 	void pop(){ //wyrzuca ostatni element ze stosu
-			if(!size){
-			cout << "Nie ma nic do wyrzucenia\n";
+		if(!size){
+			cout << "Kolejka pusta\n";
 		} else{
-			remove(tail);
+			remove(head);
 		}
 	}
 //
-	int top(){//zwraca wartosc ostatniego elementu
-		return tail->value;
+	int end(){//zwraca wartosc pierwszego elementu w kolejce
+		return head->value;
 	}
 //
 	Node* find_value(int a){ //funkcja wyszukuje ogniwo ktore posiada wartosc a i zwraca do niego wskaznik
 		while(size){
-			if(tail->value==a){
-				// cout <<"jestem tutaj(adres) ";
-				return tail;
+			if(head->value==a){
+				return head;
 			} 
 			pop();
 		}
-		cout <<"nie ma mnie tu wiec moj adres to ";
+		cout <<"nie ma mnie tu\t";
 		return NULL;
 	}
 //
-	int get_size(){   //zwraca rozmiar
+	int get_size(){  //zwraca rozmiar
 		return size;
 	}
 //
-	int get(){ //zwraca wartosc ostatniego elementu
-		return tail->value;
+	int get(){ //zwraca wartosc pierwszego elementu jak to teraz pisze to nie wiem po co mi end w takim wypadku
+		return head->value;
 	}
 //
 	int get(Node *a){ //zwraca wartosc podanego elementu
 		return a->value;
 	}
 //
-	bool is_empty(){	//sprawdza czy jest pusty
+	bool is_empty(){ //sprawdza czy pusty
 		if(!size){
 			return true;
 		} else{
@@ -100,10 +107,10 @@ public:
 //
 	void print(){
 		Node* tmp;
-		tmp=tail;
-		for(int i=size; i>0; i--){
+		tmp=head;
+		for(int i=0; i<size; i++){
 			cout << tmp->value << "\n";
-			tmp=tmp->prev;
+			tmp=tmp->next;
 		}
 	}
 //
