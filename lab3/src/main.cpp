@@ -28,9 +28,12 @@ void measures(int a, int b, iRunable &x){ //a- ile elementow, b-ile testow, x ob
 		results[j]=t.duration();
 		x.flush();
 	}
-	cout << "zajelo mi to srednio: " << results.mean() <<" mikrosekund\n";
-	cout << "a sprawdzalem to na kontenerze typu "<< x.type()<<endl;
-	cout << "dla " << a << " elementow\n";
+	cout << "-----------------------------------------------\n";
+	cout <<  x.type()<<endl;
+	cout <<a << " elementow-";
+	cout << results.mean() <<" mikrosekund\n";
+	cout << "zrobilem to: " << b << " razy\n";
+	cout << "-----------------------------------------------\n";
 }
 
 
