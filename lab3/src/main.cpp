@@ -26,6 +26,7 @@ void measures(int a, int b, iRunable &x){ //a- ile elementow, b-ile testow, x ob
 		x.find_value(2);
 		t.stop();
 		results[j]=t.duration();
+		x.flush();
 	}
 	cout << "zajelo mi to srednio: " << results.mean() <<" mikrosekund\n";
 	cout << "a sprawdzalem to na kontenerze typu "<< x.type()<<endl;
@@ -33,12 +34,38 @@ void measures(int a, int b, iRunable &x){ //a- ile elementow, b-ile testow, x ob
 }
 
 
-int main(){
+int main(int argc, char* argv[]){
 	srand(time(NULL)); //zapewnia losowosc przy kazdym kolejnym odpaleniu programu
 	List l;
 	Stack s;
 	Queue q;
-	// measures(100, 10, l);
-	// measures(100, 10, s);
-	measures(100, 10, q);
+	/*l.add(1);
+	if(l.head==l.tail){
+	cout << l.head->get_prev() << " " << l.head->get_next() << endl;
+	}
+	l.add(2);
+	if(l.head==l.tail){
+	cout << l.head->get_prev() << " " << l.head->get_next() << endl;
+	}
+	cout << l.size << endl;
+
+	l.remove(l.tail);
+	cout << l.size << endl;
+	l.remove(l.tail);
+	cout << l.size << endl; */	
+	if(argc<=2){
+		cout<<"za malo argumentow\n";
+		return 0;
+	}else{
+		if(*argv[3]=='l'){
+			measures(-atoi(argv[1]), atoi(argv[2]), l);
+		}
+		if(*argv[3]=='s'){
+			measures(-atoi(argv[1]), atoi(argv[2]), s);
+		}
+		if(*argv[3]=='q'){
+			measures(-atoi(argv[1]), atoi(argv[2]), q);
+		}
+	}
+
 }

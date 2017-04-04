@@ -13,8 +13,8 @@ class Queue : public iQueue
 	string what; //czym jestem
 public:
 	Queue(){
-		head=NULL;
-		tail=NULL;
+		head=nullptr;
+		tail=nullptr;
 		size=0;
 		what="Queue";
 	}
@@ -24,34 +24,30 @@ public:
 		if (!size){        //sprawdzenie czy kolejka jest pusta
 			head=new_;
 			tail=new_;
-			new_->prev=NULL;     //przypisanie wlasciwych wskznikow do ogniwa
-			new_->next=NULL;
+			new_->prev=nullptr;     //przypisanie wlasciwych wskznikow do ogniwa
+			new_->next=nullptr;
 		} else{
 			tail->next=new_;
 			new_->prev=tail;
 			tail=new_;
-			new_->next=NULL;
+			new_->next=nullptr;
 		}
 		new_->value=a;
 		size++;
 	}
 //	
 	void remove(Node *a){
-		if(a->prev==NULL && a->next!=NULL){  //jesli a jest na poczatku kolejki
-			a->next->prev=NULL;
+		if(a->prev==nullptr && a->next!=nullptr){  //jesli a jest na poczatku kolejki
+			a->next->prev=nullptr;
 			head=a->next;
 		}
-		if(a->prev!=NULL && a->next!=NULL){ //jesli a znajduje sie w srodku stosu
+		if(a->prev!=nullptr && a->next!=nullptr){ //jesli a znajduje sie w srodku stosu
 			a->prev->next=a->next;
 			a->next->prev=a->prev;
 		}
-		if(a->next==NULL && a->prev!=NULL){  //jesli na koncu
-			a->prev->next=NULL;
+		if(a->next==nullptr && a->prev!=nullptr){  //jesli na koncu
+			a->prev->next=nullptr;
 			tail=a->prev;
-		}
-		if(head==tail){
-			head=NULL;
-			tail=NULL;
 		}
 		size--; //rozmiar sie zmniejsza
 		delete a; //zwolnienie pamieci
@@ -83,7 +79,7 @@ public:
 			pop();
 		}
 		cout <<"nie ma mnie tu\t";
-		return NULL;
+		return nullptr;
 	}
 //
 	int get_size(){  //zwraca rozmiar
@@ -117,6 +113,12 @@ public:
 //
 	string type(){
 		return what;
+	}
+//
+	void flush(){
+		while(size){
+			remove(tail);
+		}
 	}
 };
 #endif

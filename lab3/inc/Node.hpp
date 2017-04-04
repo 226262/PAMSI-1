@@ -17,6 +17,14 @@ public:
 	int get_value(){   //zwraca wartosc ogniwa
 		return value;
 	}
+//
+	Node* get_next(){
+		return next;
+	}
+//
+	Node* get_prev(){
+		return prev;
+	}
 // przyjaciele wykorzystujacy ogniwa
 	friend class List; 
 	friend class Queue;

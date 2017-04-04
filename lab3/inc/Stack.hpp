@@ -12,37 +12,34 @@ class Stack : public iStack
 	string what; //czym jestem
 public:
 	Stack(){       //konstruktor
-		tail=NULL;
+		tail=nullptr;
 		size=0;
 		what="Stack";
 	}
 //
 	void add(int a){ //dodanie nowego ogniwa zaraz po tailu, wartosc ogniwa to a 
 		Node * new_ = new Node; //stworzenie nowego ogniwa
-		if (tail==NULL){        //sprawdzenie czy stos jest pusty
+		if (tail==nullptr){        //sprawdzenie czy stos jest pusty
 			tail=new_;
-			new_->prev=NULL;     //przypisanie wlasciwych wskznikow do ogniwa
-			new_->next=NULL;
+			new_->prev=nullptr;     //przypisanie wlasciwych wskznikow do ogniwa
+			new_->next=nullptr;
 		} else{
 			tail->next=new_;
 			new_->prev=tail;
 			tail=new_;
-			new_->next=NULL;
+			new_->next=nullptr;
 		}
 		new_->value=a;
 		size++;
 	}
 //
 	void remove(Node *a){
-		if(a->prev==NULL){
-			tail=NULL;
-		}
-		if(a->prev!=NULL && a->next!=NULL){ //jesli a znajduje sie w srodku stosu
+		if(a->prev!=nullptr && a->next!=nullptr){ //jesli a znajduje sie w srodku stosu
 			a->prev->next=a->next;
 			a->next->prev=a->prev;
 		}
-		if(a->next==NULL && a->prev!=NULL){  //jesli a to tail
-			a->prev->next=NULL;
+		if(a->next==nullptr && a->prev!=nullptr){  //jesli a to tail
+			a->prev->next=nullptr;
 			tail=a->prev;
 		}
 		size--; //rozmiar sie zmniejsza
@@ -75,7 +72,7 @@ public:
 			pop();
 		}
 		cout <<"nie ma mnie tu wiec moj adres to ";
-		return NULL;
+		return nullptr;
 	}
 //
 	int get_size(){   //zwraca rozmiar
@@ -109,6 +106,12 @@ public:
 //
 	string type(){
 		return what;
+	}
+//
+	void flush(){
+		while(size){
+			remove(tail);
+		}
 	}
 };
 #endif

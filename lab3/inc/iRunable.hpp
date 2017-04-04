@@ -19,5 +19,6 @@ public:
 	virtual void print()=0;
 	virtual bool is_empty()=0;
 	virtual std::string type()=0;
+	virtual void flush()=0;
 };
 #endif
