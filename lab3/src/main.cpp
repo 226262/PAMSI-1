@@ -35,13 +35,7 @@ void measures(int a, int b, iRunable &x){ //a- ile elementow, b-ile testow, x ob
 	cout << "zrobilem to: " << b << " razy\n";
 	cout << "-----------------------------------------------\n";
 }
-void 
-
-int main(int argc, char* argv[]){
-	srand(time(NULL)); //zapewnia losowosc przy kazdym kolejnym odpaleniu programu
-	List l;
-	Stack s;
-	Queue q;
+int obsluga_argumentow(int argc, char* argv[]){
 	argc--; //przy podaniu 3 argumentow argc wynosi 4 ???
 	if(argc!=0 && *argv[1]=='h'){
 		cout<< endl;
@@ -53,7 +47,7 @@ int main(int argc, char* argv[]){
 		cout<<"\t-s Stack\n";
 		cout<<"\t-l List\n";
 		cout<<"\t-q Queue\n";
-		cout<<"\tPrzykladowe wywolanie:\t./program -100 100 q\n";
+		cout<<"\tPrzykladowe wywolanie:\t./program 100 100 q\n";
 		cout<<"\tTo wszystko :)\n";
 		return 0;
 	}
@@ -68,8 +62,16 @@ int main(int argc, char* argv[]){
 	if(!atoi(argv[1]) || !atoi(argv[1])){
 		cout<<"BLAD-pierwszy lub drugi argument to nie liczba\n By uzyskac pomoc uzyj flagi h\n";
 		return 0;
-	}
-	if(argc==3){
+	}	
+	return 1;
+}
+
+int main(int argc, char* argv[]){
+	srand(time(NULL)); //zapewnia losowosc przy kazdym kolejnym odpaleniu programu
+	List l;
+	Stack s;
+	Queue q;
+	if(obsluga_argumentow(argc, argv)){
 		if(*argv[3]=='l'){
 			measures(atoi(argv[1]), atoi(argv[2]), l);
 		}
@@ -83,7 +85,5 @@ int main(int argc, char* argv[]){
 			return 0;
 		}
 	}
-	
-
-
+return 0;
 }
