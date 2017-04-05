@@ -34,9 +34,9 @@ public:
 	}
 //
 	void remove(Node *a){
-		if(a->prev==nullptr && a->next!=nullptr){  //jesli a jest na poczatku kolejki
+		if(a->prev==nullptr && a->next!=nullptr){  //jesli a jest na spodzie stosu
 			a->next->prev=nullptr;
-			head=a->next;
+			// head=a->next;
 		}
 		if(a->prev!=nullptr && a->next!=nullptr){ //jesli a znajduje sie w srodku stosu
 			a->prev->next=a->next;

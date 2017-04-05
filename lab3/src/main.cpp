@@ -35,26 +35,55 @@ void measures(int a, int b, iRunable &x){ //a- ile elementow, b-ile testow, x ob
 	cout << "zrobilem to: " << b << " razy\n";
 	cout << "-----------------------------------------------\n";
 }
-
+void 
 
 int main(int argc, char* argv[]){
 	srand(time(NULL)); //zapewnia losowosc przy kazdym kolejnym odpaleniu programu
 	List l;
 	Stack s;
 	Queue q;
-	if(argc<=2){
-		cout<<"za malo argumentow\n";
+	argc--; //przy podaniu 3 argumentow argc wynosi 4 ???
+	if(argc!=0 && *argv[1]=='h'){
+		cout<< endl;
+		cout<<"HELP\n\tDla poprawnego uzycia uzyj 3 flag\n";
+		cout<<"\tPierwsza <liczba> liczba elementow na jakich ma pracowac struktura\n";
+		cout<<"\tDruga <liczba> ilosc powtorzen pomiaru\n";
+		cout<<"\tTrzecia <litera> struktura na jakiej maja byc wykonane pomiary\n";
+		cout<<"\tDostepne struktury:\n";
+		cout<<"\t-s Stack\n";
+		cout<<"\t-l List\n";
+		cout<<"\t-q Queue\n";
+		cout<<"\tPrzykladowe wywolanie:\t./program -100 100 q\n";
+		cout<<"\tTo wszystko :)\n";
 		return 0;
-	}else{
+	}
+	if(argc>3){
+		cout<<"BLAD-za duzo argumentow\n By uzyskac pomoc uzyj flagi h\n";
+		return 0;
+	}
+	if(argc<=2){
+		cout<<"BLAD-za malo argumentow\n By uzyskac pomoc uzyj flagi h\n";
+		return 0;
+	}
+	if(!atoi(argv[1]) || !atoi(argv[1])){
+		cout<<"BLAD-pierwszy lub drugi argument to nie liczba\n By uzyskac pomoc uzyj flagi h\n";
+		return 0;
+	}
+	if(argc==3){
 		if(*argv[3]=='l'){
-			measures(-atoi(argv[1]), atoi(argv[2]), l);
+			measures(atoi(argv[1]), atoi(argv[2]), l);
 		}
 		if(*argv[3]=='s'){
-			measures(-atoi(argv[1]), atoi(argv[2]), s);
+			measures(atoi(argv[1]), atoi(argv[2]), s);
 		}
 		if(*argv[3]=='q'){
-			measures(-atoi(argv[1]), atoi(argv[2]), q);
+			measures(atoi(argv[1]), atoi(argv[2]), q);
+		}else{
+			cout<<"BLAD-niepoprawny ostatni argument\n By uzyskac pomoc uzyj flagi h\n";
+			return 0;
 		}
 	}
+	
+
 
 }
