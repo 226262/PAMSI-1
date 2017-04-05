@@ -13,7 +13,7 @@ void measures(int a, int b, iRunable &x){ //a- ile elementow, b-ile testow, x ob
 	Timer<microseconds> t;
 	int when; //kiedy wrzucic szukana wartosc
 	tab<float> results(b);
-	when=(rand() & (a/4)) + (a/4);
+	when=(rand() & (a/2)) + (a/4);
 	for(int j=0; j<b; j++){
 		for(int i=0; i<a; i++){
 			if(i!=when){
@@ -42,20 +42,6 @@ int main(int argc, char* argv[]){
 	List l;
 	Stack s;
 	Queue q;
-	/*l.add(1);
-	if(l.head==l.tail){
-	cout << l.head->get_prev() << " " << l.head->get_next() << endl;
-	}
-	l.add(2);
-	if(l.head==l.tail){
-	cout << l.head->get_prev() << " " << l.head->get_next() << endl;
-	}
-	cout << l.size << endl;
-
-	l.remove(l.tail);
-	cout << l.size << endl;
-	l.remove(l.tail);
-	cout << l.size << endl; */	
 	if(argc<=2){
 		cout<<"za malo argumentow\n";
 		return 0;
