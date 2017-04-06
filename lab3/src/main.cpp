@@ -13,13 +13,13 @@ void measures(int a, int b, iRunable &x){ //a- ile elementow, b-ile testow, x ob
 	Timer<microseconds> t;
 	int when; //kiedy wrzucic szukana wartosc
 	tab<float> results(b);
-	when=(rand() & (a/2)) + (a/4);
+	when=(rand() & (a/2)) + (a/4); //kiedy wrzucic szukana wartosc
 	for(int j=0; j<b; j++){
 		for(int i=0; i<a; i++){
 			if(i!=when){
 				x.add( ( (rand() & 10000) + 100) ); //wrzuca losowe liczby od 100 do 100+10000
 			} else{
-				x.add(2); //bo czemu nie
+				x.add(2); //szukana wartosc
 			}
 		}
 		t.begin();
@@ -71,6 +71,7 @@ int main(int argc, char* argv[]){
 	List l;
 	Stack s;
 	Queue q;
+	cout<<"*argv[1]+1 "<< *argv[1]+1 <<endl;
 	if(obsluga_argumentow(argc, argv)){
 		if(*argv[3]=='l'){
 			measures(atoi(argv[1]), atoi(argv[2]), l);
