@@ -6,27 +6,43 @@ using namespace std;
 
 
 
-int partition(tab<int> &a, int p, int r){
-	int x=a[r];
-	int i=(p-1);
-	for(int j=p; j<=(r-1); j++){
-		if(a[j]<=x){
-			i++;
-			a.change_place(i, j);
+
+
+void quick_sort(tab &array, int first, int last, char what_pivot){
+	int pivot_place;
+	int pivot;
+	
+	if(what_pivot=='f'){
+		pivot_place=first;
+	}
+	
+	if(what_pivot=='m'){
+		pivot_place=((first+last)/2);
+	}
+	
+	if(what_pivot=='l'){
+		pivot_place=last;
+	}
+
+	pivot=array[pivot_place];
+	array[pivot_place]=array[last];
+	int j=0;
+	for(int i=0; i<last; i++){
+		if(array[i] < pivot){
+			array.change_place(i,j);
+			j++;
 		}
 	}
-	a.change_place((i+1), r);
-	return i+1;
-}
 
-
-
-
-void quick_sort(tab<int> &a, int p, int r){
-	if(p<r){
-		int q=partition(a, p, r);
-		quick_sort(a, p, q-1);
-		quick_sort(a, q+1, r);
+	array[last]=array[j];
+	array[j]=pivot;
+	if(first<(j-1)){
+		quick_sort(array, first, (j-1), what_pivot);
 	}
+	if (j+1 <last){
+		quick_sort(array, (j+1), last, what_pivot);
+		
+	}
+
 }
 #endif

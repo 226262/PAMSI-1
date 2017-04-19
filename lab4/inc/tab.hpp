@@ -6,26 +6,26 @@
 // #include "../inc/base.hpp"
 using namespace std;
 
-template <typename T>
+ 	
 class tab       //
 {
 	int length;        //dlugosc tblicy
-	T * tablica;  //dynamiczna tablica
+	int * tablica;  //dynamiczna tablica
 	int amor;          //wolne miejsce w tablicy
 public:
 	friend void measures(int, int);
-	T & operator[](int element) {return tablica[element];} //przeciazenie operatora []
+	int & operator[](int element) {return tablica[element];} //przeciazenie operatora []
 // konstruktory i destruktory
 	tab(){
 		length=1;
 		amor=1;
-		tablica = new T [1];
+		tablica = new int [1];
 	}
 // 
 	tab(int x){
 		length=x;
 		amor =x;
-		tablica = new  T [length];
+		tablica = new  int [length];
 	}
 //
 	~tab(){
@@ -72,13 +72,13 @@ public:
 // 
 	void output()const{
 		for(int i=0; i<length; i++){
-			cout << fixed << setprecision(2) << tablica[i]<<" "<<endl;
+			cout << fixed << setprecision(2) << tablica[i]<<" ";
 		}
-		cout << endl << "thats all" << endl;
+		cout << "thats all" << endl;
 	}
 // 
 	void enlarge(unsigned int new_length){
-		T * tmp = new T [new_length];
+		int * tmp = new int [new_length];
 		for (int i=0; i<length; i++){
 			tmp[i]=tablica[i];
 		}
@@ -98,12 +98,47 @@ public:
 	}
 // 
 	void change_place(int a, int b){
-	int first;
-	int second;
+		int first;
 		first=tablica[a];
-		second=tablica[b];
-		tablica[a]=second;
+		tablica[a]=tablica[b];
 		tablica[b]=first;
 	}
+//
+	void equals(tab t){
+	if(t.get_length()==length){
+		for(int i=0; i<length; i++){
+			tablica[i]=t[i];
+		}
+	}
+	else{
+		enlarge(t.get_length());
+		for(int i=0; i<length;i++){
+		tablica[i]=t[i];	
+		}
+	}
+	
+	}
+//
+		
+	void fill(char option){
+		
+		if(option=='r'){
+			for(int i=0; i<length;i++){
+				tablica[i]=i+1;
+			}
+		}
+
+		if(option=='m'){
+			for(int i=0; i<length; i++){
+				tablica[i]=length-i;
+			}
+		}
+
+		if(option=='l'){
+			fill_rand(100);
+		}
+	
+	}
+//
 };
 #endif
