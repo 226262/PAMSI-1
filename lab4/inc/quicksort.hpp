@@ -11,7 +11,8 @@ using namespace std;
 void quick_sort(tab &array, int first, int last, char what_pivot){
 	int pivot_place;
 	int pivot;
-	
+	// i,j zmienne sluzace do przechodzenia po tablicy
+	int i,j;
 	if(what_pivot=='f'){
 		pivot_place=first;
 	}
@@ -23,11 +24,9 @@ void quick_sort(tab &array, int first, int last, char what_pivot){
 	if(what_pivot=='l'){
 		pivot_place=last;
 	}
-
 	pivot=array[pivot_place];
 	array[pivot_place]=array[last];
-	int j=0;
-	for(int i=0; i<last; i++){
+	for(i=j=first; i<last; i++){
 		if(array[i] < pivot){
 			array.change_place(i,j);
 			j++;
@@ -44,5 +43,14 @@ void quick_sort(tab &array, int first, int last, char what_pivot){
 		
 	}
 
+}
+
+bool is_sorted(tab &array){
+	for(int i=0; i<(array.get_length()-1);i++){
+		if(array[i]>array[i+1]){
+			return false;
+		}
+	}
+	return true;
 }
 #endif

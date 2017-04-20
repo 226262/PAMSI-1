@@ -1,5 +1,0 @@
-lab 4 
-strktura ma dziedzizyc po swoim interfejsie i interfejsie irunnable
-dodawaj linie zlozonosci obliczeniowej O(n), O(n^2) itd
-Sortowanie
-quick sort

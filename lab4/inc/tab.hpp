@@ -7,15 +7,15 @@
 using namespace std;
 
  	
-class tab       //
+class tab 
 {
-	int length;        //dlugosc tblicy
-	int * tablica;  //dynamiczna tablica
-	int amor;          //wolne miejsce w tablicy
+	int length;       
+	int * tablica;  
+	int amor;          
+	//amor wolne miejsce w tablicy
 public:
-	friend void measures(int, int);
-	int & operator[](int element) {return tablica[element];} //przeciazenie operatora []
-// konstruktory i destruktory
+	int & operator[](int element) {return tablica[element];}
+	
 	tab(){
 		length=1;
 		amor=1;
@@ -133,7 +133,7 @@ public:
 				tablica[i]=length-i;
 			}
 		}
-
+		
 		if(option=='l'){
 			fill_rand(100);
 		}
