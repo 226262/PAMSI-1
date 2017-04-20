@@ -1,6 +1,6 @@
 CXX=g++
 CXXFLAGS=-std=c++11 -Wall -pedantic
-BIN=merge_sort
+BIN=quick_sort
 COMMAND=10
 
 SRC=$(wildcard src/*.cpp)
